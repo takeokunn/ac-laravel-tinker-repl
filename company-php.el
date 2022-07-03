@@ -6,7 +6,7 @@
 ;; Maintainer: jim
 ;; URL: https://github.com/xcwen/ac-php
 ;; Keywords: completion, convenience, intellisense
-;; Package-Requires: ((cl-lib "0.5") (ac-php-core "2.0") (company "0.9"))
+;; Package-Requires: ((cl-lib "0.5") (ac-php-core "2.0") (company "0.9") (laravel-tinker-repl "1.0")
 ;; Compatibility: GNU Emacs: 24.4, 25.x, 26.x, 27.x
 
 ;; This file is NOT part of GNU Emacs.
@@ -53,6 +53,7 @@
 (require 'cl-lib)
 (require 'company)
 (require 'company-template)
+(require 'laravel-tinker-repl)
 
 (defgroup company-php nil
   "Completion backend for PHP."
@@ -184,9 +185,7 @@ matches IDLE-BEGIN-AFTER-RE, return it wrapped in a cons."
   (interactive (list 'interactive))
   (cl-case command
     (interactive (company-begin-backend 'company-ac-php-backend))
-    (prefix (when (or (equal major-mode 'phps-mode)
-                      (equal major-mode 'php-mode))
-              (company-ac-php--prefix)))
+    (prefix (equal major-mode 'laravel-tinker-repl-mode))
     (candidates (company-ac-php-candidate arg))
     (annotation (company-ac-php-annotation arg))
     (duplicates t)
